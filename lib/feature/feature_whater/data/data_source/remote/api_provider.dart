@@ -7,7 +7,7 @@ import '../../../../../core/params/forecast_params.dart';
 class ApiProvider{
 
   final Dio _dio =Dio();
-  var apiKey = Constants.apiKeys2;
+  var apiKey = Constants.apiKeys1;
   var baseUrl = Constants.baseUrl;
 
  Future<dynamic>callCurrentWeather(cityName) async{

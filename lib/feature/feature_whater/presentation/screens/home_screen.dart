@@ -50,33 +50,47 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         Padding(
+
           padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+
           child: TypeAheadField(
+
             textFieldConfiguration: TextFieldConfiguration(
+
               onSubmitted: (String prefix) {
+
                 textEditingController.text = prefix;
+
                 BlocProvider.of<HomeBloc>(context).add(LoadCwEvent(prefix));
+
               },
+
               controller: textEditingController,
-              style: DefaultTextStyle.of(context).style.copyWith(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
+
+              style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20, color: Colors.white),
+
               decoration: const InputDecoration(
+
                 contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+
                 hintText: "Enter a City...",
+
                 hintStyle: TextStyle(color: Colors.white),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
+
+
+                focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white),),
+
+                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white),),
+
               ),
+
             ),
+
             suggestionsCallback: (prefix) {
               return getSuggestionCityUseCase(prefix);
+
             },
+
             itemBuilder: (context, itemData) {
               return ListTile(
                 leading: const Icon(Icons.location_on),
@@ -93,6 +107,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         BlocBuilder<HomeBloc, HomeState>(
+          buildWhen: (previous, current) {
+            if (previous.cwStatus == current.cwStatus) {
+              return false;
+            } else {
+              return true;
+            }
+          },
           builder: (context, state) {
             if (state.cwStatus is CwLoading) {
               return const Center(
@@ -262,13 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.only(left: 10.0),
                           child: Center(
                             child: BlocBuilder<HomeBloc, HomeState>(
-                              buildWhen: (previous, current) {
-                                if (current.cwStatus == current.cwStatus) {
-                                  return false;
-                                } else {
-                                  return true;
-                                }
-                              },
+
                               builder: (BuildContext context, state) {
 
                                 /// show Loading State for Fw
