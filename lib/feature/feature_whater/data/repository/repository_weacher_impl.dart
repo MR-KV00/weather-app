@@ -43,7 +43,7 @@ class RepositoryWeatherImpl extends RepositoryWeather{
 
       if(response.statusCode ==200){
 
-        ForecastDaysEntity forecastDaysEntity = ForecastDaysModel.fromJson(response);
+        ForecastDaysEntity forecastDaysEntity = ForecastDaysModel.fromJson(response.data);
 
         return DataSuccess(forecastDaysEntity);
 

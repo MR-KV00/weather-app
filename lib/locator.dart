@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:whater/feature/feature_bookMark/data/data_source/local/database.dart';
 import 'package:whater/feature/feature_whater/data/data_source/remote/api_provider.dart';
 import 'package:whater/feature/feature_whater/data/repository/repository_weacher_impl.dart';
 import 'package:whater/feature/feature_whater/domain/use_cases/get_current_weather_use_case.dart';
@@ -9,7 +10,10 @@ import 'feature/feature_whater/domain/repository/repository_weather.dart';
 
 GetIt locator =GetIt.instance;
 
- setup(){
+ setup() async{
+
+  var database = await $FloorCityDataBase.databaseBuilder('CityEntity.db').build();
+  locator.registerSingleton<CityDataBase>(database);
 
   /// api
   locator.registerSingleton<ApiProvider>(ApiProvider());
