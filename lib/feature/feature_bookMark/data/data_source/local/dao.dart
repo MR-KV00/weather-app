@@ -1,6 +1,8 @@
 
  import 'package:floor/floor.dart';
-import 'package:whater/feature/feature_bookMark/domain/entitis/city_entiti.dart';
+
+import '../../../domain/entitis/city_entity.dart';
+
 
 @dao
  abstract class CityDao{

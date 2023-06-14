@@ -7,21 +7,21 @@ part of 'database.dart';
 // **************************************************************************
 
 // ignore: avoid_classes_with_only_static_members
-class $FloorCityDataBase {
+class $FloorAppDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$CityDataBaseBuilder databaseBuilder(String name) =>
-      _$CityDataBaseBuilder(name);
+  static _$AppDatabaseBuilder databaseBuilder(String name) =>
+      _$AppDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$CityDataBaseBuilder inMemoryDatabaseBuilder() =>
-      _$CityDataBaseBuilder(null);
+  static _$AppDatabaseBuilder inMemoryDatabaseBuilder() =>
+      _$AppDatabaseBuilder(null);
 }
 
-class _$CityDataBaseBuilder {
-  _$CityDataBaseBuilder(this.name);
+class _$AppDatabaseBuilder {
+  _$AppDatabaseBuilder(this.name);
 
   final String? name;
 
@@ -30,23 +30,23 @@ class _$CityDataBaseBuilder {
   Callback? _callback;
 
   /// Adds migrations to the builder.
-  _$CityDataBaseBuilder addMigrations(List<Migration> migrations) {
+  _$AppDatabaseBuilder addMigrations(List<Migration> migrations) {
     _migrations.addAll(migrations);
     return this;
   }
 
   /// Adds a database [Callback] to the builder.
-  _$CityDataBaseBuilder addCallback(Callback callback) {
+  _$AppDatabaseBuilder addCallback(Callback callback) {
     _callback = callback;
     return this;
   }
 
   /// Creates the database and initializes it.
-  Future<CityDataBase> build() async {
+  Future<AppDatabase> build() async {
     final path = name != null
         ? await sqfliteDatabaseFactory.getDatabasePath(name!)
         : ':memory:';
-    final database = _$CityDataBase();
+    final database = _$AppDatabase();
     database.database = await database.open(
       path,
       _migrations,
@@ -56,8 +56,8 @@ class _$CityDataBaseBuilder {
   }
 }
 
-class _$CityDataBase extends CityDataBase {
-  _$CityDataBase([StreamController<String>? listener]) {
+class _$AppDatabase extends AppDatabase {
+  _$AppDatabase([StreamController<String>? listener]) {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
@@ -85,7 +85,7 @@ class _$CityDataBase extends CityDataBase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `CityEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `CityEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -122,13 +122,14 @@ class _$CityDao extends CityDao {
   Future<List<CityEntity>> getAllCity() async {
     return _queryAdapter.queryList('select * from CityEntity',
         mapper: (Map<String, Object?> row) =>
-            CityEntity(row['name'] as String));
+            CityEntity(id: row['id'] as int, name: row['name'] as String));
   }
 
   @override
   Future<CityEntity?> findByName(String name) async {
     return _queryAdapter.query('select * from CityEntity Where name = ?1',
-        mapper: (Map<String, Object?> row) => CityEntity(row['name'] as String),
+        mapper: (Map<String, Object?> row) =>
+            CityEntity(id: row['id'] as int, name: row['name'] as String),
         arguments: [name]);
   }
 

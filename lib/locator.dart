@@ -12,8 +12,8 @@ GetIt locator =GetIt.instance;
 
  setup() async{
 
-  var database = await $FloorCityDataBase.databaseBuilder('CityEntity.db').build();
-  locator.registerSingleton<CityDataBase>(database);
+   var database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+   locator.registerSingleton<AppDatabase>(database);
 
   /// api
   locator.registerSingleton<ApiProvider>(ApiProvider());
