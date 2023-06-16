@@ -26,15 +26,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
   TextEditingController textEditingController = TextEditingController();
   final GetSuggestionCityUseCase getSuggestionCityUseCase = GetSuggestionCityUseCase(locator());
   final PageController _pageController = PageController(initialPage: 0);
+
+
 
   @override
   void initState() {
     super.initState();
 
     BlocProvider.of<HomeBloc>(context).add(LoadCwEvent("minab"));
+
+
   }
 
   @override
@@ -124,6 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ///cast
               final CwCompleted cwCompleted = state.cwStatus as CwCompleted;
               final CurrentCityEntity currentCityEntity = cwCompleted.currentCityEntity;
+
 
               /// foreCast
               final ForecastParams forecastParams = ForecastParams(
