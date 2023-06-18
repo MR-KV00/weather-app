@@ -50,20 +50,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
         child: Column(
-      children: [
-        SizedBox(
-          height: height * 0.02,
-        ),
+          children: [
+            SizedBox(height: height * 0.02,),
 
-        Padding(
+            Padding(
 
-          padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+              padding: EdgeInsets.symmetric(horizontal: width * 0.03),
 
-          child: TypeAheadField(
+              child: TypeAheadField(
 
-            textFieldConfiguration: TextFieldConfiguration(
+                textFieldConfiguration: TextFieldConfiguration(
 
-              onSubmitted: (String prefix) {
+                  onSubmitted: (String prefix) {
 
                 textEditingController.text = prefix;
 
